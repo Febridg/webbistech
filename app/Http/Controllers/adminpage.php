@@ -22,6 +22,16 @@ use App\Galeri;
 
 use App\Kategorigaleri;
 
+use App\Webmenu;
+
+use App\Websubmenu;
+
+use App\Modul;
+
+use App\Konten;
+
+use App\Link;
+
 class adminpage extends Controller
 {
 
@@ -186,5 +196,107 @@ class adminpage extends Controller
         $kategori = Kategorigaleri::find($id);
 
         return view('admin.gambar.editkategorigambar', ['menu' => $menu,'kategori' => $kategori]);
+    }
+
+    //function menu
+    public function addmenu()
+    {
+        $menu = Menu::all();
+            
+        return view('admin.menu.addmenu', ['menu' => $menu]);
+    }
+
+    public function listmenu()
+    {
+        $menu = Menu::all();
+        $webmenu = Webmenu::orderBy('id','desc')->get();
+
+        return view('admin.menu.listmenu', ['menu' => $menu,'webmenu' => $webmenu]);
+    }
+
+    public function editmenu($id)
+    {
+        $menu = Menu::all();
+        $webmenu = Webmenu::find($id);
+
+        return view('admin.menu.editmenu', ['menu' => $menu,'webmenu' => $webmenu]);
+    }
+
+    //function submenu
+    public function addsubmenu()
+    {
+        $menu = Menu::all();
+        $webmenu = Webmenu::all();
+            
+        return view('admin.menu.addsubmenu', ['menu' => $menu,'webmenu' => $webmenu]);
+    }
+
+    public function listsubmenu()
+    {
+        $menu = Menu::all();
+        $websubmenu = Websubmenu::orderBy('id','desc')->get();
+
+        return view('admin.menu.listsubmenu', ['menu' => $menu,'websubmenu' => $websubmenu]);
+    }
+
+    public function editsubmenu($id)
+    {
+        $menu = Menu::all();
+        $websubmenu = Websubmenu::find($id);
+        $webmenu = Webmenu::all();
+
+        return view('admin.menu.editsubmenu', ['menu' => $menu,'websubmenu' => $websubmenu, 'webmenu' => $webmenu]);
+    }
+
+    //function link
+    public function addlink()
+    {
+        $menu = Menu::all();
+        $webmenu = Webmenu::all();
+        $websubmenu = Websubmenu::all();
+            
+        return view('admin.link.addlink', ['menu' => $menu,'webmenu' => $webmenu,'websubmenu' => $websubmenu]);
+    }
+
+    public function listlink()
+    {
+        $menu = Menu::all();
+        $link = Link::all();
+
+        return view('admin.link.listlink', ['menu' => $menu,'link' => $link]);
+    }
+
+    public function editlink($id)
+    {
+        $menu = Menu::all();
+        $link = Link::find($id);
+
+        $webmenu = Webmenu::all();
+        $websubmenu = Websubmenu::all();
+
+        return view('admin.link.editlink', ['menu' => $menu,'webmenu' => $webmenu,'websubmenu' => $websubmenu,'link' => $link]);
+    }
+
+    //function modul
+    public function listmodul()
+    {
+        $menu = Menu::all();
+        $modul = Modul::orderBy('id','desc')->get();
+
+        return view('admin.modul.listmodul', ['menu' => $menu,'modul' => $modul]);
+    }
+
+    //function konten
+    public function addkonten()
+    {
+        $menu = Menu::all();
+        $link = Link::all();
+        $modul = Modul::all();
+        $post = Post::all();
+        $kategoripost = Kategoripost::all();
+        $page = Page::all();
+        $kategorigaleri = Kategorigaleri::all();
+
+        return view('admin.konten.addkonten', ['menu' => $menu,'link' => $link,'modul' => $modul,'post' => $post,'kategoripost' => $kategoripost,'page' => $page,'kategorigaleri' => $kategorigaleri]);
     }
 }

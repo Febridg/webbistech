@@ -24,6 +24,12 @@ use App\Galeri;
 
 use App\Kategorigaleri;
 
+use App\Webmenu;
+
+use App\Websubmenu;
+
+use App\Link;
+
 class adminaksi extends Controller
 {
     //post
@@ -312,6 +318,119 @@ class adminaksi extends Controller
         $kategori->delete();
 
         return redirect( env('APP_URL').'/admin/listkategorigambar');
+    }
+
+    //menu
+    public function addmenu(Request $request)
+    {
+        $tag = str_replace(" ", "-", $request->nama);
+
+        Webmenu::create([
+            'nama' => $request->nama,
+            'tag' => $tag
+        ]);
+
+        return redirect( env('APP_URL').'/admin/addmenu');
+    }
+
+    public function editmenu($id,Request $request)
+    {
+        $tgl = date("Y-m-d");
+
+        $tag = str_replace(" ", "-", $request->nama);
+
+        $webmenu = Webmenu::find($id);
+        $webmenu->nama = $request->nama;
+        $webmenu->tag = $tag;
+        $webmenu->save();
+
+        return redirect(env('APP_URL').'/admin/editmenu/'.$id);
+    }
+
+    public function deletemenu($id)
+    {
+        $webmenu = Webmenu::find($id);
+        $webmenu->delete();
+
+        return redirect( env('APP_URL').'/admin/listmenu');
+    }
+
+    //submenu
+    public function addsubmenu(Request $request)
+    {
+        $tag = str_replace(" ", "-", $request->nama);
+
+        Websubmenu::create([
+            'nama' => $request->nama,
+            'tag' => $tag
+        ]);
+
+        return redirect( env('APP_URL').'/admin/addsubmenu');
+    }
+
+    public function editsubmenu($id,Request $request)
+    {
+        $tgl = date("Y-m-d");
+
+        $tag = str_replace(" ", "-", $request->nama);
+
+        $websubmenu = Websubmenu::find($id);
+        $websubmenu->nama = $request->nama;
+        $websubmenu->tag = $tag;
+        $websubmenu->save();
+
+        return redirect(env('APP_URL').'/admin/editsubmenu/'.$id);
+    }
+
+    public function deletesubmenu($id)
+    {
+        $websubmenu = Websubmenu::find($id);
+        $websubmenu->delete();
+
+        return redirect( env('APP_URL').'/admin/listsubmenu');
+    }
+
+    //link
+    public function addlink(Request $request)
+    {
+        $tag = str_replace(" ", "-", $request->nama);
+
+        Link::create([
+            'nama' => $request->nama,
+            'tag' => $tag,
+            'webmenu_id' => $request->menu,
+            'websubmenu_id' => $request->submenu,
+            'posisi' => $request->posisi,
+            'orders' => $request->orders
+        ]);
+
+        return redirect( env('APP_URL').'/admin/addlink');
+    }
+
+    public function editlink($id,Request $request)
+    {
+        $tgl = date("Y-m-d");
+
+        $tag = str_replace(" ", "-", $request->nama);
+
+        $link = Link::find($id);
+        $link->nama = $request->nama;
+        $link->tag = $tag;
+        $link->webmenu_id = $request->menu;
+        $link->websubmenu_id = $request->submenu;
+        $link->posisi = $request->posisi;
+        $link->orders = $request->orders;
+        $link->save();
+
+        return redirect(env('APP_URL').'/admin/editlink/'.$id);
+    }
+
+    public function deletelink($id)
+    {
+        $link = Link::find($id);
+        $link->delete();
+
+        return redirect( env('APP_URL').'/admin/listlink');
     }
 
 }

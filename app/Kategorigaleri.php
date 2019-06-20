@@ -12,4 +12,9 @@ class Kategorigaleri extends Model
     {
         return $this->hasMany('App\Galeri','kategorigaleri_id');
     }
+
+    public function kontens()
+    {
+        return $this->hasMany('App\Konten','kategorigaleri_id');
+    }
 }

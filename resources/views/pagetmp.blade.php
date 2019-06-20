@@ -38,15 +38,9 @@
                 <div class="content-topbar container h-100">
                     <div class="left-topbar">
                         <span class="left-topbar-item flex-wr-s-c">
-                            <span>
-                                New York, NY
-                            </span>
+                            <span id="lokasi"></span>
 
-                            <img class="m-b-1 m-rl-8" src="images/icons/icon-night.png" alt="IMG">
-
-                            <span>
-                                HI 58° LO 56°
-                            </span>
+                            <span id="tanggal"></span>
                         </span>
 
                         <a href="#" class="left-topbar-item">
@@ -2541,6 +2535,48 @@
     <script src="{{ asset('assets/temp/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
     <!--===============================================================================================-->
     <script src="{{ asset('assets/temp/js/main.js') }}"></script>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            tampilLokasi(position);
+        }, function(e) {
+            alert('Geolocation Tidak Mendukung Pada Browser Anda');
+        }, {
+            enableHighAccuracy: true
+        });
+    });
+
+    function tampilLokasi(posisi) {
+        //console.log(posisi);
+        var latitude = posisi.coords.latitude;
+        var longitude = posisi.coords.longitude;
+        $.ajax({
+            type: 'POST',
+            url: "{{ env('APP_URL') }}/ajax/lokasi",
+            data: 'latitude=' + latitude + '&longitude=' + longitude,
+            success: function(e) {
+                if (e) {
+                    $('#lokasi').html(e);
+                } else {
+                    $('#lokasi').html('Tidak Tersedia');
+                }
+            }
+        })
+    }
+    </script>
+
+    <script type="text/javascript">
+    // 1 detik = 1000
+    window.setTimeout("waktu()", 1000);
+
+    function waktu() {
+        var tanggal = new Date();
+        setTimeout("waktu()", 1000);
+        document.getElementById("tanggal").innerHTML = tanggal.getHours() + ":" + tanggal.getMinutes() + ":" + tanggal
+            .getSeconds();
+    }
+    </script>
 
 </body>
 

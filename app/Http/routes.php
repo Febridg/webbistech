@@ -59,6 +59,39 @@ Route::get('/admin/editkategorigambar/{id}','adminpage@editkategorigambar');
 Route::post('/admin/aksi/editkategorigambar/{id}','adminaksi@editkategorigambar');
 Route::get('/admin/aksi/deletekategorigambar/{id}','adminaksi@deletekategorigambar');
 
+//menu
+Route::get('/admin/addmenu','adminpage@addmenu');
+Route::post('/admin/aksi/addmenu','adminaksi@addmenu');
+Route::get('/admin/listmenu','adminpage@listmenu');
+Route::get('/admin/editmenu/{id}','adminpage@editmenu');
+Route::post('/admin/aksi/editmenu/{id}','adminaksi@editmenu');
+Route::get('/admin/aksi/deletemenu/{id}','adminaksi@deletemenu');
+
+//submenu
+Route::get('/admin/addsubmenu','adminpage@addsubmenu');
+Route::post('/admin/aksi/addsubmenu','adminaksi@addsubmenu');
+Route::get('/admin/listsubmenu','adminpage@listsubmenu');
+Route::get('/admin/editsubmenu/{id}','adminpage@editsubmenu');
+Route::post('/admin/aksi/editsubmenu/{id}','adminaksi@editsubmenu');
+Route::get('/admin/aksi/deletesubmenu/{id}','adminaksi@deletesubmenu');
+
+//link
+Route::get('/admin/addlink','adminpage@addlink');
+Route::post('/admin/aksi/addlink','adminaksi@addlink');
+Route::get('/admin/listlink','adminpage@listlink');
+Route::get('/admin/editlink/{id}','adminpage@editlink');
+Route::post('/admin/aksi/editlink/{id}','adminaksi@editlink');
+Route::get('/admin/aksi/deletelink/{id}','adminaksi@deletelink');
+
+//modul
+Route::get('/admin/listmodul','adminpage@listmodul');
+
+//konten
+Route::get('/admin/addkonten','adminpage@addkonten');
+
+//webtmp
+Route::get('/ajax/lokasi','ajaxpage@lokasi');
+
 Route::auth();
 
 Route::get('/home', 'HomeController@index');

@@ -8,6 +8,6 @@ class Menu extends Model
 {
     public function submenus()
     {
-        return $this->hasMany('App\Submenu');
+        return $this->hasMany('App\Submenu')->orderBy('orders','asc');
     }
 }

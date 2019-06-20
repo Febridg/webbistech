@@ -12,4 +12,9 @@ class Kategoripost extends Model
     {
         return $this->hasMany('App\Post','kategoripost_id');
     }
+
+    public function kontens()
+    {
+        return $this->hasMany('App\Konten','kategoripost_id');
+    }
 }
