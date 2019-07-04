@@ -299,4 +299,27 @@ class adminpage extends Controller
 
         return view('admin.konten.addkonten', ['menu' => $menu,'link' => $link,'modul' => $modul,'post' => $post,'kategoripost' => $kategoripost,'page' => $page,'kategorigaleri' => $kategorigaleri]);
     }
+
+    public function listkonten()
+    {
+        $menu = Menu::all();
+        $konten = Konten::all();
+
+        return view('admin.konten.listkonten', ['menu' => $menu,'konten' => $konten]);
+    }
+
+    public function editkonten($id)
+    {
+        $menu = Menu::all();
+        $konten = Konten::find($id);
+
+        $link = Link::all();
+        $modul = Modul::all();
+        $post = Post::all();
+        $kategoripost = Kategoripost::all();
+        $page = Page::all();
+        $kategorigaleri = Kategorigaleri::all();
+
+        return view('admin.konten.editkonten', ['menu' => $menu,'link' => $link,'modul' => $modul,'post' => $post,'kategoripost' => $kategoripost,'page' => $page,'kategorigaleri' => $kategorigaleri,'konten' => $konten]);
+    }
 }

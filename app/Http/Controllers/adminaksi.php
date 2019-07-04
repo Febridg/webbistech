@@ -30,6 +30,8 @@ use App\Websubmenu;
 
 use App\Link;
 
+use App\Konten;
+
 class adminaksi extends Controller
 {
     //post
@@ -40,10 +42,14 @@ class adminaksi extends Controller
 
         $file = $request->file('image');
 
-        $namagambar = $file->getClientOriginalName();
-
-        $lokasi = 'gallery';
-        $file->move($lokasi,$file->getClientOriginalName());
+        if (empty($file)) {
+            $namagambar = '0';
+        }else {
+            $namagambar = $file->getClientOriginalName();
+            
+            $lokasi = 'gallery';
+            $file->move($lokasi,$file->getClientOriginalName());
+        }
 
         Post::create([
     		'judul' => $request->judul,
@@ -149,10 +155,14 @@ class adminaksi extends Controller
 
         $file = $request->file('image');
 
-        $namagambar = $file->getClientOriginalName();
-
-        $lokasi = 'gallery';
-        $file->move($lokasi,$file->getClientOriginalName());
+        if (empty($file)) {
+            $namagambar = '0';
+        }else {
+            $namagambar = $file->getClientOriginalName();
+            
+            $lokasi = 'gallery';
+            $file->move($lokasi,$file->getClientOriginalName());
+        }
 
         Page::create([
     		'judul' => $request->judul,
@@ -431,6 +441,49 @@ class adminaksi extends Controller
         $link->delete();
 
         return redirect( env('APP_URL').'/admin/listlink');
+    }
+
+    //konten
+    public function addkonten(Request $request)
+    {
+        Konten::create([
+            'link_id' => $request->link,
+            'modul_id' => $request->modul,
+            'konten' => $request->konten,
+            'post_id' => $request->post,
+            'kategoripost_id' => $request->kategoripost,
+            'page_id' => $request->page,
+            'kategorigaleri_id' => $request->galeri,
+            'posisi' => $request->posisi,
+            'orders' => $request->orders
+        ]);
+
+        return redirect( env('APP_URL').'/admin/addkonten');
+    }
+
+    public function editkonten($id,Request $request)
+    {
+        $konten = Konten::find($id);
+        $konten->link_id = $request->link;
+        $konten->modul_id = $request->modul;
+        $konten->konten = $request->konten;
+        $konten->post_id = $request->post;
+        $konten->kategoripost_id = $request->kategoripost;
+        $konten->page_id = $request->page;
+        $konten->kategorigaleri_id = $request->galeri;
+        $konten->posisi = $request->posisi;
+        $konten->orders = $request->orders;
+        $konten->save();
+
+        return redirect(env('APP_URL').'/admin/editkonten/'.$id);
+    }
+
+    public function deletekonten($id)
+    {
+        $konten = Konten::find($id);
+        $konten->delete();
+
+        return redirect( env('APP_URL').'/admin/listkonten');
     }
 
 }

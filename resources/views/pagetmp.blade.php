@@ -52,11 +52,11 @@
                         </a>
 
                         <a href="#" class="left-topbar-item">
-                            Sing up
+                            Log in
                         </a>
 
                         <a href="#" class="left-topbar-item">
-                            Log in
+                            {{ KontenHelp::get_konten() }}
                         </a>
                     </div>
 

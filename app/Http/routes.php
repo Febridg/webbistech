@@ -88,6 +88,11 @@ Route::get('/admin/listmodul','adminpage@listmodul');
 
 //konten
 Route::get('/admin/addkonten','adminpage@addkonten');
+Route::post('/admin/aksi/addkonten','adminaksi@addkonten');
+Route::get('/admin/listkonten','adminpage@listkonten');
+Route::get('/admin/editkonten/{id}','adminpage@editkonten');
+Route::post('/admin/aksi/editkonten/{id}','adminaksi@editkonten');
+Route::get('/admin/aksi/deletekonten/{id}','adminaksi@deletekonten');
 
 //webtmp
 Route::get('/ajax/lokasi','ajaxpage@lokasi');
