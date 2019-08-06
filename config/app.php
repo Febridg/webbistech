@@ -155,7 +155,9 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\KontenServiceProvider::class
+        App\Providers\KontenServiceProvider::class,
+        App\Providers\MenusServiceProvider::class,
+        App\Providers\ModuleServiceProvider::class
 
     ],
 
@@ -202,7 +204,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'KontenHelp' => App\Helpers\Konten::class
+        'KontenHelp' => App\Helpers\Pagekonten::class,
+        'MenuHelp' => App\Helpers\Menu::class,
+        'ModuleHelp' => App\Helpers\Module::class
 
     ],
 

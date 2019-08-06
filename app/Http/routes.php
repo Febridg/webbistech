@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'page@home');
+Route::get('/', 'pagectr@home');
 //login
 Route::get('/admin', 'adminpage@home');
 Route::post('/admin/login','adminpage@login');
