@@ -264,7 +264,7 @@
                     </a>
                     <ul class="collapse" id="{{ $m->nama }}">
                         @foreach($m->submenus as $sm)
-                        <li class=""><a href="http://localhost/bistech{{ $sm->link }}"><i class="icon-angle-right"></i>
+                        <li class=""><a href="{{ env('APP_URL') }}{{ $sm->link }}"><i class="icon-angle-right"></i>
                                 {{ $sm->nama }} </a>
                         </li>
                         @endforeach

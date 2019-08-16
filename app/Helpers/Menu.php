@@ -7,7 +7,7 @@ use App\Link;
 
 class Menu {
     public static function get_menu($posisi) {
-        $menu = Link::where('posisi',$posisi)->groupBy('webmenu_id')->orderBy('orders')->get();
+        $menu = Link::where('posisi',$posisi)->where('websubmenu_id',0)->where('id','!=',1)->groupBy('webmenu_id')->orderBy('orders')->get();
         return ($menu);
     }
 

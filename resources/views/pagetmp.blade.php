@@ -219,11 +219,13 @@
                         <ul class="main-menu">
                             @foreach(MenuHelp::get_menu('atas2') as $mm)
                             <li class="main-menu-active">
-                                <a href="">{{ $mm->webmenus->nama }}</a>
+                                <a href="{{ env('APP_URL') }}/page/{{ $mm->tag }}">{{ $mm->webmenus->nama }}</a>
                                 <ul class="sub-menu">
                                     @foreach(MenuHelp::get_submenu($mm->webmenu_id) as $sm)
                                     @if ($sm->websubmenu_id != 0)
-                                    <li><a href="">{{ $sm->websubmenus->nama }}</a></li>
+                                    <li><a
+                                            href="{{ env('APP_URL') }}/page/{{ $sm->tag }}">{{ $sm->websubmenus->nama }}</a>
+                                    </li>
                                     @endif
                                     @endforeach
                                 </ul>
