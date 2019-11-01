@@ -61,19 +61,17 @@
                 </div>
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
-                        <li class="menu-active"><a href="inxed.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="service.html">Service</a></li>
-                        <li><a href="team.html">Team</a></li>
-                        <li><a href="price.html">Price</a></li>
-                        <li><a href="blog-home.html">Blog</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li class="menu-has-children"><a href="">Pages</a>
-                            <ul>
-                                <li><a href="blog-single.html">blog Single</a></li>
-                                <li><a href="elements.html">Elements</a></li>
-                            </ul>
-                        </li>
+                        @foreach(MenuHelp::get_menu('atas2') as $mm)
+                            <li class="menu-has-children"><a href="{{ env('APP_URL') }}/page/{{ $mm->tag }}">{{ $mm->webmenus->nama }}</a>
+                                <ul>
+                                    @foreach(MenuHelp::get_submenu($mm->webmenu_id) as $sm)
+                                    @if ($sm->websubmenu_id != 0)
+                                    <li><a href="{{ env('APP_URL') }}/page/{{ $sm->tag }}">{{ $sm->websubmenus->nama }}</a></li>
+                                    @endif
+                                    @endforeach
+                                </ul>
+                            </li>
+                        @endforeach
                     </ul>
                 </nav><!-- #nav-menu-container -->
             </div>
@@ -88,10 +86,9 @@
             <div class="row">
                 <div class="col-lg-5 col-md-6 col-sm-6">
                     <div class="single-footer-widget">
-                        <h6>About Us</h6>
+                        <h6>Tentang Kami</h6>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
-                            ut labore dolore magna aliqua.
+                            Konsultan IT dan Pembuatan aplikasi berbasis web yang berlokasi di Kota Surabaya
                         </p>
                         <p class="footer-text">
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
@@ -105,25 +102,9 @@
                 </div>
                 <div class="col-lg-5  col-md-6 col-sm-6">
                     <div class="single-footer-widget">
-                        <h6>Newsletter</h6>
-                        <p>Stay update with our latest</p>
-                        <div class="" id="mc_embed_signup">
-                            <form target="_blank" novalidate="true"
-                                action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                                method="get" class="form-inline">
-                                <input class="form-control" name="EMAIL" placeholder="Enter Email"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"
-                                    required="" type="email">
-                                <button class="click-btn btn btn-default"><span
-                                        class="lnr lnr-arrow-right"></span></button>
-                                <div style="position: absolute; left: -5000px;">
-                                    <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value=""
-                                        type="text">
-                                </div>
-
-                                <div class="info"></div>
-                            </form>
-                        </div>
+                        <h6>Hubungi Kami</h6>
+                        No Tlp / WA :
+                        Email :
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-6 col-sm-6 social-widget">
