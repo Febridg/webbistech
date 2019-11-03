@@ -21,221 +21,128 @@ use App\Konten;
 
 use App\Link;
 
+use App\Portofolio;
+
+use App\Client;
+
 class Module {
 
-public static function newsticker()
+public static function portofolio()
 {
-    $post = Post::orderBy('id','desc')->limit(5)->get();
+    $portofolio = Portofolio::orderBy('id','desc')->limit(3)->get();
 
-        ?>
-<div class="container">
-    <div class="bg0 flex-wr-sb-c p-rl-20 p-tb-8">
-        <div class="f2-s-1 p-r-30 size-w-0 m-tb-6 flex-wr-s-c">
-            <span class="text-uppercase cl2 p-r-8">
-                Trending Now:
-            </span>
-
-            <span class="dis-inline-block cl6 slide100-txt pos-relative size-w-0" data-in="fadeInDown"
-                data-out="fadeOutDown">
-                <?php
-                    foreach ($post as $p) {
-                        ?>
-                <span class="dis-inline-block slide100-txt-item animated visible-false">
-                    <?php echo $p->judul ?>
-                </span>
-                <?php
-                    }
-                    ?>
-            </span>
+?>
+<section class="service-area section-gap" id="service">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-70 col-lg-8">
+                <div class="title text-center">
+                    <h1 class="mb-10">Portofolio</h1>
+                    <p>Proyek yang sudah kami kerjakan</p>
+                </div>
+            </div>
         </div>
-        <div class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6">
-            <input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="text" name="search" placeholder="Search">
-            <button class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03">
-                <i class="zmdi zmdi-search"></i>
-            </button>
+        <div class="row">
+            <?php
+                foreach ($portofolio as $p) {
+                    ?>
+            <div class="col-lg-4">
+                <div class="single-service">
+                    <div class="thumb">
+                        <img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $p->gambar ?>"
+                            alt="">
+                    </div>
+                    <div class="detail">
+                        <a href="#">
+                            <h4><?php echo $p->judul ?></h4>
+                        </a>
+                        <p>
+                            <?php echo $p->isi ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <?php
+                }
+            ?>
         </div>
     </div>
-</div>
+</section>
 <?php       
 }
 
-public static function featurepost()
+public static function client()
 {
+    $client = Client::orderBy('id','desc')->limit(7)->get();
 
-$postmain = Post::orderBy('id','desc')->limit(1)->get();
-$postsub = Post::orderBy('id','desc')->offset(1)->limit(3)->get();
-    
 ?>
-<section class="bg0">
+<section class="galery-area section-gap" id="gallery">
     <div class="container">
-        <div class="row m-rl--1">
-            <?php
-            foreach ($postmain as $pm) {
-                ?>
-            <div class="col-md-6 p-rl-1 p-b-2">
-                <div class="bg-img1 size-a-3 how1 pos-relative"
-                    style="background-image: url(<?php echo env('APP_URL') ?>/gallery/<?php echo $pm->gambar ?>);">
-                    <a href="blog-detail-01.html" class="dis-block how1-child1 trans-03"></a>
-
-                    <div class="flex-col-e-s s-full p-rl-25 p-tb-20">
-                        <a href="#"
-                            class="dis-block how1-child2 f1-s-2 cl0 bo-all-1 bocl0 hov-btn1 trans-03 p-rl-5 p-t-2">
-                            <?php echo $pm->kategoriposts->nama ?>
-                        </a>
-
-                        <h3 class="how1-child2 m-t-14 m-b-10">
-                            <a href="blog-detail-01.html" class="how-txt1 size-a-6 f1-l-1 cl0 hov-cl10 trans-03">
-                                <?php echo $pm->judul ?>
-                            </a>
-                        </h3>
-                    </div>
+        <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-70 col-lg-8">
+                <div class="title text-center">
+                    <h1 class="mb-10">Client</h1>
+                    <p>Client yang telah berkerja sama dengan kami</p>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <?php
-            }
-            ?>
-
-
-            <div class="col-md-6 p-rl-1">
-                <div class="row m-rl--1">
-                    <?php
-                $n = 1;
-                foreach ($postsub as $ps) {
-                    if ($n==1) {
+                foreach ($client as $cl) {
                     ?>
-                    <div class="col-12 p-rl-1 p-b-2">
-                        <div class="bg-img1 size-a-4 how1 pos-relative"
-                            style="background-image: url(<?php echo env('APP_URL') ?>/gallery/<?php echo $ps->gambar ?>);">
-                            <a href="blog-detail-01.html" class="dis-block how1-child1 trans-03"></a>
-
-                            <div class="flex-col-e-s s-full p-rl-25 p-tb-24">
-                                <a href="#"
-                                    class="dis-block how1-child2 f1-s-2 cl0 bo-all-1 bocl0 hov-btn1 trans-03 p-rl-5 p-t-2">
-                                    <?php echo $ps->kategoriposts->nama ?>
-                                </a>
-
-                                <h3 class="how1-child2 m-t-14">
-                                    <a href="blog-detail-01.html"
-                                        class="how-txt1 size-a-7 f1-l-2 cl0 hov-cl10 trans-03">
-                                        <?php echo $ps->judul ?>
-                                    </a>
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-                    }else{
-                        ?>
-                    <div class="col-sm-6 p-rl-1 p-b-2">
-                        <div class="bg-img1 size-a-5 how1 pos-relative"
-                            style="background-image: url(<?php echo env('APP_URL') ?>/gallery/<?php echo $ps->gambar ?>);">
-                            <a href="blog-detail-01.html" class="dis-block how1-child1 trans-03"></a>
-
-                            <div class="flex-col-e-s s-full p-rl-25 p-tb-20">
-                                <a href="#"
-                                    class="dis-block how1-child2 f1-s-2 cl0 bo-all-1 bocl0 hov-btn1 trans-03 p-rl-5 p-t-2">
-                                    <?php echo $ps->kategoriposts->nama ?>
-                                </a>
-
-                                <h3 class="how1-child2 m-t-14">
-                                    <a href="blog-detail-01.html"
-                                        class="how-txt1 size-h-1 f1-m-1 cl0 hov-cl10 trans-03">
-                                        <?php echo $ps->judul ?>
-                                    </a>
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-                    }
-                    $n++;
-                    
+            <div class="col-lg-7 col-md-6">
+                <a href="<?php echo env('APP_URL') ?>/gallery/<?php echo $cl->gambar ?>" class="single-gallery">
+                    <img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $cl->gambar ?>" alt="">
+                </a>
+            </div>
+            <?php
                 }
-                ?>
+            ?>
+        </div>
+    </div>
+</section>
+<?php 
+}
+
+public static function fplistartikel($id)
+{
+    $post = Post::where('kategoripost_id',$id)->orderBy('id','desc')->limit(7)->get();
+    $kategori = Kategoripost::find($id);
+?>
+<section class="blog-area section-gap" id="blog">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-70 col-lg-8">
+                <div class="title text-center">
+                    <h1 class="mb-10"><?php echo $kategori->nama ?></h1>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <?php
+                foreach ($post as $ps) {
+                    $skiphtml = strip_tags($ps->isi);
+                    $isi = substr($skiphtml,0,100); 
+                    ?>
+            <div class="col-lg-3 col-md-6 single-blog">
+                <div class="thumb">
+                    <img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $ps->gambar ?>" alt="">
+                </div>
+                <p class="date"><?php echo $ps->tgl_post ?></p>
+                <a href="blog-single.html">
+                    <h4><?php $ps->judul ?></h4>
+                </a>
+                <p>
+                    <?php echo $isi ?>
+                </p>
+            </div>
+            <?php
+                }
+            ?>
         </div>
     </div>
 </section>
 <?php
-
-}
-
-public static function postlistleft($id)
-{
-
-$postmain = Post::where('kategoripost_id',$id)->orderBy('id','desc')->limit(1)->get();
-$postsub = Post::where('kategoripost_id',$id)->orderBy('id','desc')->offset(1)->limit(4)->get();
-$kategori = Kategoripost::find($id);
-
-?>
-<div class="tab01 p-b-20">
-    <div class="tab01-head how2 how2-cl1 bocl12 flex-s-c m-r-10 m-r-0-sr991">
-        <!-- Brand tab -->
-        <h3 class="f1-m-2 cl12 tab01-title">
-            <?php echo $kategori->nama ?>
-        </h3>
-
-        <!-- Nav tabs -->
-    </div>
-
-
-    <!-- Tab panes -->
-    <div class="tab-content p-t-35">
-        <!-- - -->
-        <div class="tab-pane fade show active" id="tab1-1" role="tabpanel">
-            <div class="row">
-                <div class="col-sm-6 p-r-25 p-r-15-sr991">
-                    <?php
-                    foreach ($postmain as $pm) {
-                    ?>
-                    <!-- Item post -->
-                    <div class="m-b-30">
-                        <a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
-                            <img src="<?php echo env('APP_URL') ?>/gallery/<?php echo $pm->gambar ?>" alt="IMG">
-                        </a>
-
-                        <div class="p-t-20">
-                            <h5 class="p-b-5">
-                                <a href="" class="f1-m-3 cl2 hov-cl10 trans-03">
-                                    <?php echo $pm->judul ?>
-                                </a>
-                            </h5>
-                        </div>
-                    </div>
-                    <?php
-                    }
-                    ?>
-                </div>
-
-                <div class="col-sm-6 p-r-25 p-r-15-sr991">
-                    <?php
-                    foreach ($postsub as $ps) {
-                    ?>
-                    <!-- Item post -->
-                    <div class="flex-wr-sb-s m-b-30">
-                        <a href="blog-detail-01.html" class="size-w-1 wrap-pic-w hov1 trans-03">
-                            <img src="<?php echo env('APP_URL') ?>/gallery/<?php echo $ps->gambar ?>" alt="IMG">
-                        </a>
-
-                        <div class="size-w-2">
-                            <h5 class="p-b-5">
-                                <a href="" class="f1-s-5 cl3 hov-cl10 trans-03">
-                                    <?php echo $ps->judul ?>
-                                </a>
-                            </h5>
-                        </div>
-                    </div>
-                    <?php
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<?php
-
 }
 
 public static function categorylist()
