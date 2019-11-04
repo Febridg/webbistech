@@ -106,7 +106,7 @@ public static function client()
 
 public static function fplistartikel($id)
 {
-    $post = Post::where('kategoripost_id',$id)->orderBy('id','desc')->limit(7)->get();
+    $post = Post::where('kategoripost_id',$id)->orderBy('id','desc')->limit(4)->get();
     $kategori = Kategoripost::find($id);
 ?>
 <section class="blog-area section-gap" id="blog">
@@ -145,72 +145,44 @@ public static function fplistartikel($id)
 <?php
 }
 
-public static function categorylist()
+public static function listartikel_edt($id)
 {
 
-$kategori = Kategoripost::all();
-    
-?>
-<div class="p-b-60">
-    <div class="how2 how2-cl4 flex-s-c">
-        <h3 class="f1-m-2 cl3 tab01-title">
-            Kategori
-        </h3>
-    </div>
+    $post = Post::where('kategoripost_id',$id)->orderBy('id','desc')->paginate(5);
+    $kategori = Kategoripost::find($id);
 
-    <ul class="p-t-35">
-        <?php
-        foreach ($kategori as $k) {
-        ?>
-        <li class="how-bor3 p-rl-4">
-            <a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
-                <?php echo $k->nama ?>
-            </a>
-        </li>
-        <?php
-        }
-        ?>
-    </ul>
-</div>
-<?php
+foreach ($post as $pst) {
+    $skiphtml = strip_tags($pst->isi);
+    $isi = substr($skiphtml,0,100);
+    ?>
+        <div class="single-post">
+			<img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $pst->gambar ?>" alt="">
+			<a href="">
+			    <h1><?php echo $pst->judul ?></h1>
+			</a>
+			<p>
+			<?php echo $pst->isi ?>
+			</p>
+		</div>
+	<?php
+}
 
 }
 
-public static function postdetail($id,$konten)
+public static function postdetail($id)
 {
-
-if ($konten=='Post') {
     $isikonten = Post::find($id);
-}elseif ($konten=='Page') {
-    $isikonten = Page::find($id);
-}
-
 ?>
-<div class="p-r-10 p-r-0-sr991">
-    <!-- Blog Detail -->
-    <div class="p-b-70">
-        <?php
-        if ($konten=='Post') {
-        ?>
-        <a href="#" class="f1-s-10 cl2 hov-cl10 trans-03 text-uppercase">
-            <?php echo $isikonten->kategoriposts->nama ?>
-        </a>
-        <?php
-        }
-        ?>
-
-        <h3 class="f1-l-3 cl2 p-b-16 p-t-33 respon2">
-            <?php echo $isikonten->judul ?>
-        </h3>
-
-        <div class="wrap-pic-max-w p-b-30">
-            <img src="<?php echo env('APP_URL') ?>/gallery/<?php echo $isikonten->gambar ?>" alt="IMG">
-        </div>
-
+<div class="single-post">
+	<img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $isikonten->gambar ?>" alt="">
+	<a href="#">
+		<h1>
+		<?php echo $isikonten->judul ?>
+	    </h1>
+	</a>
+	<div class="content-wrap">									
         <?php echo $isikonten->isi ?>
-
     </div>
-
 </div>
 <?php
 
