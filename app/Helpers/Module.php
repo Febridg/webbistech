@@ -169,7 +169,7 @@ foreach ($post as $pst) {
 
 }
 
-public static function postdetail($id)
+public static function postdetail_edit($id)
 {
     $isikonten = Post::find($id);
 ?>
@@ -188,74 +188,78 @@ public static function postdetail($id)
 
 }
 
-public static function categorypage($id)
+public static function pagedetail_edit($id)
 {
-    $postlist = Post::where('kategoripost_id',$id)->orderBy('id','desc')->paginate(5);    
+    $isikonten = Page::find($id);
 ?>
-<div class="p-r-10 p-r-0-sr991">
-    <div class="m-t--65 p-b-40">
-        <?php
-        foreach ($postlist as $pl) {
-        ?>
-        <!-- Item Blog -->
-        <div class="flex-col-s-c how-bor2 p-t-65 p-b-40">
-            <a href="#" class="f1-s-10 cl2 text-uppercase txt-center hov-cl10 trans-03 p-b-40">
-                <?php echo $pl->kategoriposts->nama ?>
-            </a>
-
-            <h5 class="p-b-17 txt-center">
-                <a href="blog-detail-01.html" class="f1-l-1 cl2 hov-cl10 trans-03 respon2">
-                    <?php echo $pl->judul ?>
-                </a>
-            </h5>
-
-            <a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03 m-b-30">
-                <img src="<?php echo env('APP_URL') ?>/gallery/<?php echo $pl->gambar ?>" alt="IMG">
-            </a>
-
-            <p class="f1-s-11 cl6 txt-center p-b-22">
-                <?php
-                $skiphtml = strip_tags($pl->isi);
-                $cut = substr($skiphtml,0,100);
-
-                echo $cut;
-                ?>
-            </p>
-
-            <a href="" class="f1-s-1 cl9 hov-cl10 trans-03">
-                Read More
-                <i class="m-l-2 fa fa-long-arrow-alt-right"></i>
-            </a>
-        </div>
-        <?php
-        }
-        ?>
-    </div>
-
-    <?php
-    $jmlhal = ceil($postlist->total()/$postlist->perPage());
-    ?>
-
-    <!-- Pagination -->
-    <div class="flex-wr-c-c m-rl--7 p-t-15">
-        <?php
-        for ($i=1; $i <= $jmlhal ; $i++) { 
-            if ($postlist->currentPage()==$i) {
-                ?>
-        <a href="<?php echo $postlist->url($i) ?>"
-            class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7 pagi-active"><?php echo $i; ?></a>
-        <?php
-            }else {
-                ?>
-        <a href="<?php echo $postlist->url($i) ?>"
-            class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7"><?php echo $i; ?></a>
-        <?php
-            }
-        }
-        ?>
+<div class="single-post">
+	<img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $isikonten->gambar ?>" alt="">
+	<a href="#">
+		<h1>
+		<?php echo $isikonten->judul ?>
+	    </h1>
+	</a>
+	<div class="content-wrap">									
+        <?php echo $isikonten->isi ?>
     </div>
 </div>
 <?php
+}
+
+public function kategorilist_edit()
+{
+    $kategori = Kategoripost::all();
+
+    ?>
+        <div class="single-widget category-widget">
+			<h4 class="title">Kategori Artikel</h4>
+			<ul>
+                <?php
+                    foreach ($kategori as $kt) {
+                        ?>
+                            <li><a href="#" class="justify-content-between align-items-center d-flex"><h6><?php echo $kt->nama ?></h6></a></li>
+                        <?php
+                    }
+                ?>
+			</ul>
+		</div>
+    <?php
+}
+
+public function beritabaru_edit($id)
+{
+    if ($id==0) {
+        $post = Post::orderBy('id','desc')->limit(5)->get();
+    }else{
+        $post = Post::where('kategoripost_id',$id)->orderBy('id','desc')->limit(5)->get();
+    }
+
+    ?>
+        <div class="single-widget recent-posts-widget">
+		    <h4 class="title">Berita Terbaru</h4>
+			<div class="blog-list ">
+                <?php
+                    foreach ($post as $pst) {
+                        ?>
+                            <div class="single-recent-post d-flex flex-row">
+                                <div class="recent-thumb">
+                                    <img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $pst->gambar ?>" alt="">
+                                </div>
+                                <div class="recent-details">
+                                    <a href="#">
+                                        <h4>
+                                            <?php echo $pst->judul ?>
+                                        </h4>
+                                    </a>
+                                </div>
+                            </div>
+                        <?php
+                    }
+                ?>	
+			</div>								
+		</div>
+    <?php
+    
 }
 
 }
