@@ -36,25 +36,36 @@ class Pagekonten {
         }
         elseif ($konten=='Galeri') {
             $id = $kategorigaleri_id;
+        }else {
+            $id = 0;
         }
 
         if ($module==3) {
-            Module::newsticker();
+            Module::portofolio();
         }
         elseif ($module==4) {
-            Module::featurepost();
+            Module::client();
         }
         elseif ($module==5) {
-            Module::postlistleft($id);
-        }
-        elseif ($module==6) {
-            Module::categorylist();
-        }
-        elseif ($module==9) {
-            Module::postdetail($id,$konten);
+            Module::fplistartikel($id);
         }
         elseif ($module==7) {
-            Module::categorypage($id);
+            Module::listartkel();
+        }
+        elseif ($module==9) {
+            Module::kategorilist();
+        }
+        elseif ($module==10) {
+            Module::kontak($id);
+        }
+        elseif ($module==11) {
+            Module::post($id);
+        }
+        elseif ($module==12) {
+            Module::newpost($id);
+        }
+        elseif ($module==13) {
+            Module::page($id);
         }
     }
 }

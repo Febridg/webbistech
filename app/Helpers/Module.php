@@ -145,7 +145,7 @@ public static function fplistartikel($id)
 <?php
 }
 
-public static function listartikel_edt($id)
+public static function listartkel($id)
 {
 
     $post = Post::where('kategoripost_id',$id)->orderBy('id','desc')->paginate(5);
@@ -155,32 +155,54 @@ foreach ($post as $pst) {
     $skiphtml = strip_tags($pst->isi);
     $isi = substr($skiphtml,0,100);
     ?>
-        <div class="single-post">
-			<img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $pst->gambar ?>" alt="">
-			<a href="">
-			    <h1><?php echo $pst->judul ?></h1>
-			</a>
-			<p>
-			<?php echo $pst->isi ?>
-			</p>
-		</div>
-	<?php
+<div class="single-post">
+    <img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $pst->gambar ?>" alt="">
+    <a href="">
+        <h1><?php echo $pst->judul ?></h1>
+    </a>
+    <p>
+        <?php echo $pst->isi ?>
+    </p>
+</div>
+<?php
 }
+
+$jmlhal = ceil($post->total()/$post->perPage());
+
+?>
+<div class="flex-wr-c-c m-rl--7 p-t-15">
+    <?php
+        for ($i=1; $i <= $jmlhal ; $i++) { 
+            if ($postlist->currentPage()==$i) {
+                ?>
+    <a href="<?php echo $postlist->url($i) ?>"
+        class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7 pagi-active"><?php echo $i; ?></a>
+    <?php
+            }else {
+                ?>
+    <a href="<?php echo $postlist->url($i) ?>"
+        class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7"><?php echo $i; ?></a>
+    <?php
+            }
+        }
+        ?>
+</div>
+<?php
 
 }
 
-public static function postdetail_edit($id)
+public static function post($id)
 {
     $isikonten = Post::find($id);
 ?>
 <div class="single-post">
-	<img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $isikonten->gambar ?>" alt="">
-	<a href="#">
-		<h1>
-		<?php echo $isikonten->judul ?>
-	    </h1>
-	</a>
-	<div class="content-wrap">									
+    <img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $isikonten->gambar ?>" alt="">
+    <a href="#">
+        <h1>
+            <?php echo $isikonten->judul ?>
+        </h1>
+    </a>
+    <div class="content-wrap">
         <?php echo $isikonten->isi ?>
     </div>
 </div>
@@ -188,45 +210,47 @@ public static function postdetail_edit($id)
 
 }
 
-public static function pagedetail_edit($id)
+public static function page($id)
 {
     $isikonten = Page::find($id);
 ?>
 <div class="single-post">
-	<img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $isikonten->gambar ?>" alt="">
-	<a href="#">
-		<h1>
-		<?php echo $isikonten->judul ?>
-	    </h1>
-	</a>
-	<div class="content-wrap">									
+    <img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $isikonten->gambar ?>" alt="">
+    <a href="#">
+        <h1>
+            <?php echo $isikonten->judul ?>
+        </h1>
+    </a>
+    <div class="content-wrap">
         <?php echo $isikonten->isi ?>
     </div>
 </div>
 <?php
 }
 
-public function kategorilist_edit()
+public function kategorilist()
 {
     $kategori = Kategoripost::all();
 
     ?>
-        <div class="single-widget category-widget">
-			<h4 class="title">Kategori Artikel</h4>
-			<ul>
-                <?php
+<div class="single-widget category-widget">
+    <h4 class="title">Kategori Artikel</h4>
+    <ul>
+        <?php
                     foreach ($kategori as $kt) {
                         ?>
-                            <li><a href="#" class="justify-content-between align-items-center d-flex"><h6><?php echo $kt->nama ?></h6></a></li>
-                        <?php
+        <li><a href="#" class="justify-content-between align-items-center d-flex">
+                <h6><?php echo $kt->nama ?></h6>
+            </a></li>
+        <?php
                     }
                 ?>
-			</ul>
-		</div>
-    <?php
+    </ul>
+</div>
+<?php
 }
 
-public function beritabaru_edit($id)
+public function newpost($id)
 {
     if ($id==0) {
         $post = Post::orderBy('id','desc')->limit(5)->get();
@@ -235,31 +259,101 @@ public function beritabaru_edit($id)
     }
 
     ?>
-        <div class="single-widget recent-posts-widget">
-		    <h4 class="title">Berita Terbaru</h4>
-			<div class="blog-list ">
-                <?php
+<div class="single-widget recent-posts-widget">
+    <h4 class="title">Berita Terbaru</h4>
+    <div class="blog-list ">
+        <?php
                     foreach ($post as $pst) {
                         ?>
-                            <div class="single-recent-post d-flex flex-row">
-                                <div class="recent-thumb">
-                                    <img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $pst->gambar ?>" alt="">
-                                </div>
-                                <div class="recent-details">
-                                    <a href="#">
-                                        <h4>
-                                            <?php echo $pst->judul ?>
-                                        </h4>
-                                    </a>
-                                </div>
-                            </div>
-                        <?php
+        <div class="single-recent-post d-flex flex-row">
+            <div class="recent-thumb">
+                <img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $pst->gambar ?>" alt="">
+            </div>
+            <div class="recent-details">
+                <a href="#">
+                    <h4>
+                        <?php echo $pst->judul ?>
+                    </h4>
+                </a>
+            </div>
+        </div>
+        <?php
                     }
-                ?>	
-			</div>								
-		</div>
-    <?php
+                ?>
+    </div>
+</div>
+<?php
     
+}
+
+public function kontak()
+{
+    ?>
+<section class="contact-page-area section-gap">
+    <div class="container">
+        <div class="row">
+            <div class="map-wrap" style="width:100%; height: 445px;" id="map"></div>
+            <div class="col-lg-4 d-flex flex-column address-wrap">
+                <div class="single-contact-address d-flex flex-row">
+                    <div class="icon">
+                        <span class="lnr lnr-home"></span>
+                    </div>
+                    <div class="contact-details">
+                        <h5>Dhaka, Bangladesh</h5>
+                        <p>56/8, West Panthapath</p>
+                    </div>
+                </div>
+                <div class="single-contact-address d-flex flex-row">
+                    <div class="icon">
+                        <span class="lnr lnr-phone-handset"></span>
+                    </div>
+                    <div class="contact-details">
+                        <h5>00 (880) 9865 562</h5>
+                        <p>Mon to Fri 9am to 6 pm</p>
+                    </div>
+                </div>
+                <div class="single-contact-address d-flex flex-row">
+                    <div class="icon">
+                        <span class="lnr lnr-envelope"></span>
+                    </div>
+                    <div class="contact-details">
+                        <h5>support@codethemes.com</h5>
+                        <p>Send us your query anytime!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <form class="form-area " id="myForm" action="mail.php" method="post" class="contact-form text-right">
+                    <div class="row">
+                        <div class="col-lg-6 form-group">
+                            <input name="name" placeholder="Enter your name" onfocus="this.placeholder = ''"
+                                onblur="this.placeholder = 'Enter your name'" class="common-input mb-20 form-control"
+                                required="" type="text">
+
+                            <input name="email" placeholder="Enter email address"
+                                pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'"
+                                class="common-input mb-20 form-control" required="" type="email">
+
+                            <input name="subject" placeholder="Enter your subject" onfocus="this.placeholder = ''"
+                                onblur="this.placeholder = 'Enter your subject'" class="common-input mb-20 form-control"
+                                required="" type="text">
+                            <div class="mt-20 alert-msg" style="text-align: left;"></div>
+                        </div>
+                        <div class="col-lg-6 form-group">
+                            <textarea class="common-textarea form-control" name="message" placeholder="Messege"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'"
+                                required=""></textarea>
+                            <button class="primary-btn mt-20 text-white" style="float: right;">Send Message</button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<?php
 }
 
 }
