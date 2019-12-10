@@ -32,23 +32,35 @@ class pagectr extends Controller
 {
     public function home()
     {
-        $newsticker = Konten::where('link_id',1)->where('modul_id',3);
-        $featurepost = Konten::where('link_id',1)->where('modul_id',4);
-        $kontencenter = Konten::where('link_id',1)->where('posisi','Center')->orderBy('orders')->get();
-        $kontenkanan = Konten::where('link_id',1)->where('posisi','Kanan')->orderBy('orders')->get();
-
-        return view('page.page',['newsticker' => $newsticker,'featurepost' => $featurepost,'kontencenter' => $kontencenter,'kontenkanan' => $kontenkanan]);
+        $kontencenter = Konten::where('link_id',14)->where('posisi','Center')->orderBy('orders')->get();
+        $kontenkanan = Konten::where('link_id',14)->where('posisi','Kanan')->orderBy('orders')->get();
+        $jmlkontenkanan = Konten::where('link_id',14)->where('posisi','Kanan')->count();
+        $link = Link::find(14);
+        
+        return view('page.page',['kontencenter' => $kontencenter,'kontenkanan' => $kontenkanan,'jmlkontenkanan' => $jmlkontenkanan,'link' => $link]);
     }
 
     public function page($page)
     {
         $link = Link::where('tag',$page)->first();
 
-        $newsticker = Konten::where('link_id',$link->id)->where('modul_id',3);
-        $featurepost = Konten::where('link_id',$link->id)->where('modul_id',4);
         $kontencenter = Konten::where('link_id',$link->id)->where('posisi','Center')->orderBy('orders')->get();
         $kontenkanan = Konten::where('link_id',$link->id)->where('posisi','Kanan')->orderBy('orders')->get();
+        $jmlkontenkanan = Konten::where('link_id',$link->id)->where('posisi','Kanan')->count();
 
-        return view('page.page',['newsticker' => $newsticker,'featurepost' => $featurepost,'kontencenter' => $kontencenter,'kontenkanan' => $kontenkanan]);
+        return view('page.page',['kontencenter' => $kontencenter,'kontenkanan' => $kontenkanan,'jmlkontenkanan' => $jmlkontenkanan,'link' => $link]);
+    }
+
+    public function post($post)
+    {
+        $link = Link::where('tag','detail-post')->first();
+
+        $detailpost = Post::where('tag',$post)->first();
+        $kontenkanan = Konten::where('link_id',$link->id)->where('posisi','Kanan')->orderBy('orders')->get();
+        $jmlkontenkanan = Konten::where('link_id',$link->id)->where('posisi','Kanan')->count();
+
+        //$isi = html_entity_decode($detailpost->isi);
+
+        return view('page.post',['detailpost' => $detailpost,'kontenkanan' => $kontenkanan,'jmlkontenkanan' => $jmlkontenkanan,'link' => $link]);
     }
 }

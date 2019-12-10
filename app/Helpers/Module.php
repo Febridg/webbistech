@@ -128,9 +128,8 @@ public static function fplistartikel($id)
                 <div class="thumb">
                     <img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $ps->gambar ?>" alt="">
                 </div>
-                <p class="date"><?php echo $ps->tgl_post ?></p>
-                <a href="blog-single.html">
-                    <h4><?php $ps->judul ?></h4>
+                <a href="<?php echo env('APP_URL') ?>/post/<?php echo $ps->tag ?>">
+                    <h4><?php echo $ps->judul ?></h4>
                 </a>
                 <p>
                     <?php echo $isi ?>
@@ -153,15 +152,15 @@ public static function listartkel($id)
 
 foreach ($post as $pst) {
     $skiphtml = strip_tags($pst->isi);
-    $isi = substr($skiphtml,0,100);
+    $isi = substr($skiphtml,0,500);
     ?>
 <div class="single-post">
     <img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $pst->gambar ?>" alt="">
-    <a href="">
+    <a href="<?php echo env('APP_URL') ?>/post/<?php echo $pst->tag ?>">
         <h1><?php echo $pst->judul ?></h1>
     </a>
     <p>
-        <?php echo $pst->isi ?>
+        <?php echo $isi ?>
     </p>
 </div>
 <?php
@@ -173,15 +172,14 @@ $jmlhal = ceil($post->total()/$post->perPage());
 <div class="flex-wr-c-c m-rl--7 p-t-15">
     <?php
         for ($i=1; $i <= $jmlhal ; $i++) { 
-            if ($postlist->currentPage()==$i) {
+            if ($post->currentPage()==$i) {
                 ?>
-    <a href="<?php echo $postlist->url($i) ?>"
+    <a href="<?php echo $post->url($i) ?>"
         class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7 pagi-active"><?php echo $i; ?></a>
     <?php
             }else {
                 ?>
-    <a href="<?php echo $postlist->url($i) ?>"
-        class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7"><?php echo $i; ?></a>
+    <a href="<?php echo $post->url($i) ?>" class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7"><?php echo $i; ?></a>
     <?php
             }
         }
@@ -214,21 +212,25 @@ public static function page($id)
 {
     $isikonten = Page::find($id);
 ?>
-<div class="single-post">
-    <img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $isikonten->gambar ?>" alt="">
-    <a href="#">
-        <h1>
-            <?php echo $isikonten->judul ?>
-        </h1>
-    </a>
-    <div class="content-wrap">
-        <?php echo $isikonten->isi ?>
+<section class="blog-posts-area section-gap">
+    <div class="col-lg-12 post-list blog-post-list">
+        <div class="single-post">
+            <img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $isikonten->gambar ?>" alt="">
+            <a href="#">
+                <h1>
+                    <?php echo $isikonten->judul ?>
+                </h1>
+            </a>
+            <div class="content-wrap">
+                <?php echo $isikonten->isi ?>
+            </div>
+        </div>
     </div>
-</div>
+</section>
 <?php
 }
 
-public function kategorilist()
+public static function kategorilist()
 {
     $kategori = Kategoripost::all();
 
@@ -250,7 +252,7 @@ public function kategorilist()
 <?php
 }
 
-public function newpost($id)
+public static function newpost($id)
 {
     if ($id==0) {
         $post = Post::orderBy('id','desc')->limit(5)->get();
@@ -270,7 +272,7 @@ public function newpost($id)
                 <img class="img-fluid" src="<?php echo env('APP_URL') ?>/gallery/<?php echo $pst->gambar ?>" alt="">
             </div>
             <div class="recent-details">
-                <a href="#">
+                <a href="<?php echo env('APP_URL') ?>/post/<?php echo $pst->tag ?>">
                     <h4>
                         <?php echo $pst->judul ?>
                     </h4>
@@ -286,7 +288,7 @@ public function newpost($id)
     
 }
 
-public function kontak()
+public static function kontak()
 {
     ?>
 <section class="contact-page-area section-gap">

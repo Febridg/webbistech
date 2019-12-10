@@ -50,7 +50,7 @@ class Pagekonten {
             Module::fplistartikel($id);
         }
         elseif ($module==7) {
-            Module::listartkel();
+            Module::listartkel($id);
         }
         elseif ($module==9) {
             Module::kategorilist();

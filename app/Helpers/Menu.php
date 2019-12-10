@@ -15,4 +15,11 @@ class Menu {
         $submenu = Link::where('webmenu_id',$webmenu)->orderBy('orders')->get();
         return ($submenu);
     }
+
+    public static function jml_submenu($webmenu)
+    {
+        $submenu = Link::where('webmenu_id',$webmenu)->orderBy('orders')->get();
+        $jml = $submenu->count();
+        return ($jml);
+    }
 }

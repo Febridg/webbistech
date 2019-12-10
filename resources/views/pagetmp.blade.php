@@ -15,7 +15,7 @@
     <!-- meta character set -->
     <meta charset="UTF-8">
     <!-- Site Title -->
-    <title>Security</title>
+    <title>Bistech Studio</title>
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
     <!--
@@ -38,17 +38,13 @@
             <div class="row">
                 <div class="col-6 top-head-left">
                     <ul>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                        <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
                     </ul>
                 </div>
                 <div class="col-6 top-head-right">
                     <ul>
-                        <li><a href="tel:+880 012 3654 896"><span>+880 012 3654 896</span> <span
+                        <li><a href="tel:+62 821 4136 8509"><span>whats app : +62 821 4136 8509</span> <span
                                     class="lnr lnr-phone-handset"></span></a></li>
-                        <li><a href="#">Register / Login</a></li>
                     </ul>
                 </div>
             </div>
@@ -61,16 +57,22 @@
                 </div>
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
-                        @foreach(MenuHelp::get_menu('atas2') as $mm)
-                            <li class="menu-has-children"><a href="{{ env('APP_URL') }}/page/{{ $mm->tag }}">{{ $mm->webmenus->nama }}</a>
-                                <ul>
-                                    @foreach(MenuHelp::get_submenu($mm->webmenu_id) as $sm)
-                                    @if ($sm->websubmenu_id != 0)
-                                    <li><a href="{{ env('APP_URL') }}/page/{{ $sm->tag }}">{{ $sm->websubmenus->nama }}</a></li>
-                                    @endif
-                                    @endforeach
-                                </ul>
-                            </li>
+                        @foreach(MenuHelp::get_menu('atas1') as $mm)
+                        @if(MenuHelp::jml_submenu($mm->webmenu_id)>1)
+                        <li><a href="">{{ $mm->webmenus->nama }}</a>
+                            <ul>
+                                @foreach(MenuHelp::get_submenu($mm->webmenu_id) as $sm)
+                                @if ($sm->websubmenu_id != 0)
+                                <li><a href="{{ env('APP_URL') }}/page/{{ $sm->tag }}">{{ $sm->websubmenus->nama }}</a>
+                                </li>
+                                @endif
+                                @endforeach
+                            </ul>
+                        </li>
+                        @else
+                        <li><a href="{{ env('APP_URL') }}/page/{{ $mm->tag }}">{{ $mm->webmenus->nama }}</a></li>
+                        @endif
+
                         @endforeach
                     </ul>
                 </nav><!-- #nav-menu-container -->
